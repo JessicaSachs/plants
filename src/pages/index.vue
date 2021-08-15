@@ -12,12 +12,16 @@ const date = ref(Date.now())
 </script>
 
 <template>
-  <div class="text-center w-full p-8 mx-auto my-0">
-    <h1 class="text-3xl">Planters</h1>
-    <!-- <Planters :planters="planters"></Planters> -->
-    <ul class="grid gap-6 justify-start sm:justify-center md:grid-flow-col-dense">
-      <PlanterCard v-for="planter in planters" :planter="planter" :key="planter.name" />
-    </ul>
+  <div class="text-center w-full">
+    <div class="bg-cyan-100 p-12 pb-24 sm:p-6 sm:pb-8 shadow-xs text-left">
+      <h1 class="text-4xl bg-cyan-100 text-center text-cyan-700">Planters</h1>
+    </div>
+    <div class="w-full h-full -mt-12 px-2 pb-12 sm:pb-2 sm:-mt-2 sm:px-2">
+      <!-- <Planters :planters="planters"></Planters> -->
+      <ul class="grid gap-6 sm:justify-center md:grid-flow-col-dense">
+        <PlanterCard v-for="planter in planters" :planter="planter" :key="planter.name" />
+      </ul>
+    </div>
     <!-- <section
       v-for="planter in planters"
       class="max-w-500px my-0 mx-auto flex flex-col gap-4 divide-gray-500"
