@@ -21,6 +21,7 @@ declare module 'vue' {
     Planters: typeof import('./src/components/Planters.vue')['default']
     PlanterTimeline: typeof import('./src/components/PlanterTimeline.vue')['default']
     README: typeof import('./src/components/README.md')['default']
+    Table: typeof import('./src/components/Table.vue')['default']
   }
 }
 
