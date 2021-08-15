@@ -12,6 +12,13 @@ declare module 'vue' {
     CarbonSun: typeof import('virtual:vite-icons/carbon/sun')['default']
     CarbonWarning: typeof import('virtual:vite-icons/carbon/warning')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
+    MdiCoffee: typeof import('virtual:vite-icons/mdi/coffee')['default']
+    MdiFlower: typeof import('virtual:vite-icons/mdi/flower')['default']
+    PlanterCard: typeof import('./src/components/PlanterCard.vue')['default']
+    PlanterCardFeeding: typeof import('./src/components/PlanterCardFeeding.vue')['default']
+    PlanterCardFeedings: typeof import('./src/components/PlanterCardFeedings.vue')['default']
+    Planters: typeof import('./src/components/Planters.vue')['default']
+    PlanterTimeline: typeof import('./src/components/PlanterTimeline.vue')['default']
     README: typeof import('./src/components/README.md')['default']
   }
 }

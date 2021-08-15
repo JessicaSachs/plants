@@ -20,6 +20,8 @@
 import { reactive } from 'vue'
 
 const plant = reactive({ name: '', kind: '', category: 'herbs' })
+
+
 </script>
 
 <style>
