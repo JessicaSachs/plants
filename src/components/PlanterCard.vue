@@ -1,7 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-    <div class="px-4 py-5">
+  <div class="bg-white shadow overflow-hidden h-min sm:rounded-lg flex-grow-[1] min-w-50% w-500px">
+    <div class="px-4 py-5 w-full items-center inline-flex justify-between">
       <h3 class="text-lg leading-6 font-medium text-gray-900">{{ planter.name }}</h3>
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
@@ -10,7 +10,7 @@
           <dt class="text-sm font-medium text-gray-500">{{ field.label }}</dt>
           <dd class="mt-1 text-sm text-gray-900">{{ field.value }}</dd>
         </div>
-        <div class="sm:col-span-2 border-t-1 pt-5 mt-5">
+        <div class="sm:col-span-2 pt-5 mt-5">
           <dt class="text-md pb-2 text-left font-normal text-gray-900">Feedings</dt>
           <dd class="mt-1 text-sm text-gray-900">
             <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
@@ -47,12 +47,17 @@
                   </div>
                 </div>
               </div>
-
-              <!-- </li> -->
             </ul>
           </dd>
         </div>
       </dl>
+    </div>
+    <div class="border-t border-gray-200 w-full flex justify-between px-4 py-5 sm:px-6">
+      <button class="underline self-end text-indigo-600 hover:text-indigo-500 text-sm">See details</button>
+      <button
+        @click="planter.feed()"
+        class="py-1 px-2 bg-indigo-600 focus:ring-1 focus:ring-offset-1 focus:ring-indigo-600 hover:bg-indigo-500 text-white rounded text-sm"
+      >Feed {{ planter.nextFeeding().feedAmount }}ml {{ planter.nextFeeding().shouldClean ? '+ Clean' : '' }}</button>
     </div>
   </div>
 </template>

@@ -32,13 +32,29 @@ export const bountySchedule = [
 ]
 
 export const bountyOne = new Planter({
-  name: 'Bounty Elite',
+  name: 'Bounty Elite (1)',
+  model: 'Bounty Elite',
+  size: 9,
+  schedule: [...bountySchedule.map((s) => new Feeding(s))],
+})
+
+export const bountyTwo = new Planter({
+  name: 'Bounty Elite (2)',
+  model: 'Bounty Elite',
+  size: 9,
+  schedule: [...bountySchedule.map((s) => new Feeding(s))],
+})
+
+export const bountyThree = new Planter({
+  name: 'Bounty Elite (3)',
+  model: 'Bounty Elite',
   size: 9,
   schedule: [...bountySchedule.map((s) => new Feeding(s))],
 })
 
 export const kitchenHarvest = new Planter({
   name: 'Harvest 360',
+  model: 'Harvest 360',
   size: 6,
   schedule: [
     new Feeding({

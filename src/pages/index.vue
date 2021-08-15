@@ -1,53 +1,50 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { bountyOne, kitchenHarvest } from '../models'
+import { bountyOne, bountyThree, bountyTwo, kitchenHarvest } from '../models'
 import PlanterCard from '../components/PlanterCard.vue'
+import NextFeedings from '../components/NextFeedings.vue'
 
 const planters = reactive([
   bountyOne,
-  kitchenHarvest
+  kitchenHarvest,
+  bountyTwo,
+  bountyThree
 ])
 
 const date = ref(Date.now())
+
+const feedThemAll = () => planters.forEach(p => p.feed())
+
 </script>
 
 <template>
-  <div class="text-center w-full">
-    <div class="bg-cyan-100 p-12 pb-24 sm:p-6 sm:pb-8 shadow-xs text-left">
-      <h1 class="text-4xl bg-cyan-100 text-center text-cyan-700">Planters</h1>
-    </div>
-    <div class="w-full h-full -mt-12 px-2 pb-12 sm:pb-2 sm:-mt-2 sm:px-2">
-      <!-- <Planters :planters="planters"></Planters> -->
-      <ul class="grid gap-6 sm:justify-center md:grid-flow-col-dense">
-        <PlanterCard v-for="planter in planters" :planter="planter" :key="planter.name" />
-      </ul>
-    </div>
-    <!-- <section
-      v-for="planter in planters"
-      class="max-w-500px my-0 mx-auto flex flex-col gap-4 divide-gray-500"
+  <div class="text-center max-w-1200px mx-auto my-0">
+    <div
+      class="p-2 py-12 border-b-1 pb-6 mb-12 sm:p-2 sm:pb-8 shadow-xs text-left flex justify-between"
     >
-      <h2 class="text-xl">{{ planter.name }}</h2>
-      <p>Days until next feeding: {{ planter.daysUntilNextFeeding }}</p>
-      <table class="mx-auto my-0">
-        <thead>
-          <th>Date</th>
-          <th>Feed amount</th>
-          <th>Clean</th>
-        </thead>
-        <tbody>
-          <tr v-for="feeding in planter.sortByDate()">
-            <td>{{ feeding.nextDatePretty }}</td>
-            <td>{{ feeding.feedAmount }}ml</td>
-            <td>{{ feeding.shouldClean }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <h1 class="text-3xl text-center text-indigo-600">Hurlbut Garden</h1>
+    </div>
+    <div
+      class="w-full h-full px-2 pb-12 sm:pb-2 sm:-mt-2 sm:px-2 space-y-12 max-w-1200px mx-auto my-0"
+    >
+      <div class="w-full space-y-4 max-w-700px">
+        <div class="flex justify-between">
+          <h2 class="text-2xl text-gray-800">Upcoming feedings</h2>
+          <button
+            class="text-md text-white bg-indigo-600 rounded px-2 py-1"
+            @click="feedThemAll"
+          >Feed them all</button>
+        </div>
 
-      <button
-        class="p-2 max-w-120px text-white rounded hover:bg-emerald-400 bg-emerald-500 border-1 border-emerald-400"
-        @click="planter.feed(new Date(date || Date.now()).getTime())"
-      >Feed</button>
-    </section>-->
+        <NextFeedings @click="$event.feed()" :planters="planters" />
+      </div>
+      <div class="w-full space-y-4">
+        <h2 class="text-2xl text-gray-800 text-left">All Planters</h2>
+        <ul class="flex flex-wrap gap-6 justify-evenly text-center">
+          <PlanterCard v-for="planter in planters" :planter="planter" :key="planter.name" />
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 

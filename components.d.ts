@@ -14,6 +14,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/Footer.vue')['default']
     MdiCoffee: typeof import('virtual:vite-icons/mdi/coffee')['default']
     MdiFlower: typeof import('virtual:vite-icons/mdi/flower')['default']
+    NextFeedings: typeof import('./src/components/NextFeedings.vue')['default']
     PlanterCard: typeof import('./src/components/PlanterCard.vue')['default']
     PlanterCardFeeding: typeof import('./src/components/PlanterCardFeeding.vue')['default']
     PlanterCardFeedings: typeof import('./src/components/PlanterCardFeedings.vue')['default']

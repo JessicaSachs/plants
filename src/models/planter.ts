@@ -30,7 +30,7 @@ export function shiftDates(byDate: number, dates: Feeding[]) {
   return newDates
 }
 
-export type PlanterOptions = Pick<Planter, 'name' | 'schedule' | 'size'>
+export type PlanterOptions = Pick<Planter, 'name' | 'schedule' | 'size' | 'model'>
 
 export class Feeding {
   shouldClean: boolean
@@ -61,7 +61,8 @@ export class Feeding {
 export class Planter {
   id = Math.round(Math.random() * 10000)
   schedule: Feeding[]
-  name: 'Harvest 360' | 'Bounty Elite'
+  name: string
+  model: 'Harvest 360' | 'Bounty Elite'
   size: 6 | 9
   lastFeedDate: number = Date.now()
   startDate: number = Date.now()
@@ -71,6 +72,7 @@ export class Planter {
     this.schedule = options.schedule
     this.size = options.size
     this.name = options.name
+    this.model = options.model
 
     // @ts-ignore
     this.lastFeedDate = options.lastFeedDate

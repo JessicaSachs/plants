@@ -41,7 +41,11 @@
         'pointer-events-none select-none': disabled,
       }"
     >
-      <button @click="$emit('click')" class="text-indigo-600 hover:text-indigo-900">Feed</button>
+      <button
+        :disabled="disabled"
+        @click="$emit('click')"
+        class="text-indigo-600 hover:text-indigo-900"
+      >Feed</button>
     </td>
   </tr>
 </template>
