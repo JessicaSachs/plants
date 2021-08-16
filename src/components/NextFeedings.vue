@@ -51,7 +51,7 @@
                   :class="{
                     'text-red-600': planter.nextFeeding.overdue
                   }"
-                >{{ planter.nextFeeding.nextDate }}</td>
+                >{{ d(new Date(planter.nextFeeding.nextDate)) }}</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <a

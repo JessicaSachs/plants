@@ -11,6 +11,7 @@ gql`
  query GetPlanters {
    app {
      planters {
+       id
        name
        size
        lastFeedDate
