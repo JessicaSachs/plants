@@ -35,23 +35,23 @@
                 >
                   <span
                     class="text-pink-800 bg-pink-100 py-2px rounded px-2 text-xs"
-                  >{{ planter.nextFeeding().feedAmount }}ml</span>
+                  >{{ planter.nextFeeding.feedAmount }}ml</span>
 
                   <span
-                    v-if="planter.nextFeeding().shouldClean"
+                    v-if="planter.nextFeeding.shouldClean"
                     class="text-indigo-800 bg-indigo-100 py-2px rounded px-2 text-xs"
                   >Clean</span>
                   <span
-                    v-if="planter.nextFeeding().times === 1"
+                    v-if="planter.nextFeeding.times === 1"
                     class="text-yellow-800 bg-yellow-100 py-2px rounded px-2 text-xs"
                   >One-time</span>
                 </td>
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm text-left text-gray-500"
                   :class="{
-                    'text-red-600': planter.nextFeeding().overdue
+                    'text-red-600': planter.nextFeeding.overdue
                   }"
-                >{{ d(planter.nextFeeding().nextDate) }}</td>
+                >{{ planter.nextFeeding.nextDate }}</td>
 
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <a
@@ -70,12 +70,12 @@
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { Planter } from '../models'
+import { GetPlantersQuery } from '~/generated/graphql'
 
 const { d } = useI18n()
 
 defineProps<{
-  planters: Planter[]
+  planters: GetPlantersQuery['app']['planters']
 }>()
 
 </script>

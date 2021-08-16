@@ -11,30 +11,36 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
+  DateTime: any;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
 };
 
 
 
-export type BookInput = {
-  readonly author: Scalars['String'];
-  readonly title: Scalars['String'];
-  readonly year: Scalars['Int'];
+
+
+
+
+export type PlanterFeedInput = {
+  readonly date: Maybe<Scalars['String']>;
+  readonly planterId: Maybe<Scalars['String']>;
 };
 
+export type PlanterModels =
+  | 'bountyelite'
+  | 'harvest360';
+
+export type PlanterSizes =
+  | 'nine'
+  | 'six';
 
 
-export type AddBookMutationVariables = Exact<{
-  input: BookInput;
-}>;
+export type GetPlantersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AddBookMutation = { readonly __typename?: 'Mutation', readonly addBook: Maybe<{ readonly __typename?: 'Book', readonly title: string }> };
-
-export type GetBooksQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPlantersQuery = { readonly __typename?: 'Query', readonly app: { readonly __typename?: 'App', readonly planters: ReadonlyArray<{ readonly __typename?: 'Planter', readonly name: string, readonly size: PlanterSizes, readonly lastFeedDate: string, readonly nextFeeding: { readonly __typename?: 'Feeding', readonly nextDate: string, readonly feedAmount: number, readonly interval: Maybe<number>, readonly shouldClean: boolean, readonly id: string, readonly times: Maybe<number> }, readonly schedule: ReadonlyArray<{ readonly __typename?: 'Feeding', readonly nextDate: string, readonly feedAmount: number, readonly interval: Maybe<number>, readonly shouldClean: boolean, readonly id: string, readonly times: Maybe<number> }> }> } };
 
 
-export type GetBooksQuery = { readonly __typename?: 'Query', readonly app: { readonly __typename?: 'App', readonly books: ReadonlyArray<{ readonly __typename?: 'Book', readonly title: string }> } };
-
-
-export const AddBookDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddBook"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BookInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addBook"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<AddBookMutation, AddBookMutationVariables>;
-export const GetBooksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBooks"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"books"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetBooksQuery, GetBooksQueryVariables>;
+export const GetPlantersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlanters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"lastFeedDate"}},{"kind":"Field","name":{"kind":"Name","value":"nextFeeding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nextDate"}},{"kind":"Field","name":{"kind":"Name","value":"feedAmount"}},{"kind":"Field","name":{"kind":"Name","value":"interval"}},{"kind":"Field","name":{"kind":"Name","value":"shouldClean"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"times"}}]}},{"kind":"Field","name":{"kind":"Name","value":"schedule"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nextDate"}},{"kind":"Field","name":{"kind":"Name","value":"feedAmount"}},{"kind":"Field","name":{"kind":"Name","value":"interval"}},{"kind":"Field","name":{"kind":"Name","value":"shouldClean"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"times"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPlantersQuery, GetPlantersQueryVariables>;

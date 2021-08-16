@@ -1,7 +1,7 @@
 import { App } from './App'
-import { Book } from './Book'
+import { Planter } from './Planter'
 
 export abstract class Context {
-  abstract books: Book[]
+  abstract planters: Planter[]
   app = new App(this)
 }

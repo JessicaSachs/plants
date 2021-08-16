@@ -1,24 +1,31 @@
-import { inputObjectType, mutationType, nonNull } from 'nexus'
+import { inputObjectType, mutationType, nonNull, list } from 'nexus'
+import { Planter } from './Planter'
 
 export const Mutation = mutationType({
   definition(t) {
-    t.field('addBook', {
-      type: 'Book',
-      description: 'Add a new book',
+    t.field('feedPlanter', {
+      type: nonNull(list(nonNull('Planter'))),
+      description: 'Feed the planter on a specific date',
       args: {
-        input: nonNull(
-          inputObjectType({
-            name: 'BookInput',
-            definition(t) {
-              t.nonNull.string('title')
-              t.nonNull.string('author')
-              t.nonNull.int('year')
-            },
-          })
-        ),
+        input: inputObjectType({
+          name: 'PlanterFeedInput',
+          definition(t) {
+            t.string('date')
+            t.string('planterId')
+          },
+        }),
       },
-      async resolve(root, args, ctx) {
-        return ctx.app.addBook(args.input)
+      resolve(_, args, ctx): any {
+        const planters = args.input?.planterId
+          ? ctx.planters.filter((p: Planter) => p.id === args.input.planterId)
+          : ctx.planters
+
+        planters.map((p: Planter) => {
+          p.feed()
+          return p
+        })
+
+        return planters
       },
     })
   },

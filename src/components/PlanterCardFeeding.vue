@@ -8,7 +8,7 @@
           <mdi-flower class="w-full h-full self-center text-xl" />
         </div>
         <div class="ml-4">
-          <div class="text-sm font-medium text-gray-900">{{ d(feeding.nextDate) }}</div>
+          <div class="text-sm font-medium text-gray-900">{{ feeding.nextDate }}</div>
           <div class="text-sm text-gray-500 text-left">{{ feeding.feedAmount }}ml</div>
         </div>
       </div>
@@ -50,18 +50,19 @@
   </tr>
 </template>
 
-<script lang="ts">
+<script lang="ts">import { GetPlantersQuery } from '~/generated/graphql'
+
 export default {
   inheritAttrs: false
 }
 </script>
 <script lang="ts" setup>
-import type { Feeding } from '../models/'
-import { useI18n } from 'vue-i18n'
+// import type { Feeding } from '../models/'
+// import { useI18n } from 'vue-i18n'
 
-const { d } = useI18n()
+// const { d } = useI18n()
 defineProps<{
-  feeding: Feeding
+  feeding: GetPlantersQuery['app']['planters'][0]['schedule'][0]
   disabled: boolean
 }>()
 </script>

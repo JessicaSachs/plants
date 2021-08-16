@@ -37,9 +37,9 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                           <PlanterCardFeeding
                             v-for="feeding in planter.schedule"
-                            @click="planter.feed()"
+                            @click="log"
                             :feeding="feeding"
-                            :disabled="feeding !== planter.nextFeeding()"
+                            :disabled="feeding.id !== planter.nextFeeding.id"
                           />
                         </tbody>
                       </table>
@@ -55,33 +55,34 @@
     <div class="border-t border-gray-200 w-full flex justify-between px-4 py-5 sm:px-6">
       <button class="underline self-end text-indigo-600 hover:text-indigo-500 text-sm">See details</button>
       <button
-        @click="planter.feed()"
+        @click="log"
         class="py-1 px-2 bg-indigo-600 focus:ring-1 focus:ring-offset-1 focus:ring-indigo-600 hover:bg-indigo-500 text-white rounded text-sm"
-      >Feed {{ planter.nextFeeding().feedAmount }}ml {{ planter.nextFeeding().shouldClean ? '+ Clean' : '' }}</button>
+      >Feed {{ planter.nextFeeding.feedAmount }}ml {{ planter.nextFeeding.shouldClean ? '+ Clean' : '' }}</button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Planter } from '../models'
-import { useI18n } from 'vue-i18n'
 import PlanterCardFeeding from './PlanterCardFeeding.vue'
+import { GetPlantersQuery } from '~/generated/graphql'
 
+
+const log = () => { }
 const props = defineProps<{
-  planter: Planter
+  planter: GetPlantersQuery['app']['planters'][0]
 }>()
 
-const { d } = useI18n()
+// const { d } = useI18n()
 
 
 const fields = computed(() => ([
   {
     label: 'Date Planted',
-    value: d(props.planter.startDate)
+    value: props.planter.startDate
   },
   {
     label: 'Next Feeding',
-    value: d(props.planter.nextFeeding().nextDate)
+    value: props.planter.nextFeeding.nextDate
   },
   {
     label: '# Pods',

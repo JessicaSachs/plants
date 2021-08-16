@@ -6,9 +6,33 @@
 
 import type { Context } from "./../Context"
 import type { Query } from "./../Query"
-import type { Book } from "./../Book"
-
-
+import type { Planter } from "./../Planter"
+import type { Feeding } from "./../Feeding"
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSON";
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSON";
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -16,14 +40,15 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  BookInput: { // input type
-    author: string; // String!
-    title: string; // String!
-    year: number; // Int!
+  PlanterFeedInput: { // input type
+    date?: string | null; // String
+    planterId?: string | null; // String
   }
 }
 
 export interface NexusGenEnums {
+  PlanterModels: "bountyelite" | "harvest360"
+  PlanterSizes: "nine" | "six"
 }
 
 export interface NexusGenScalars {
@@ -32,12 +57,15 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
+  JSON: any
 }
 
 export interface NexusGenObjects {
   App: {};
-  Book: Book;
+  Feeding: Feeding;
   Mutation: {};
+  Planter: Planter;
   Query: Query;
 }
 
@@ -49,48 +77,79 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   App: { // field return type
-    books: NexusGenRootTypes['Book'][]; // [Book!]!
+    planters: NexusGenRootTypes['Planter'][]; // [Planter!]!
   }
-  Book: { // field return type
-    author: string; // String!
-    title: string; // String!
-    year: number; // Int!
+  Feeding: { // field return type
+    feedAmount: number; // Int!
+    id: string; // ID!
+    interval: number | null; // Int
+    nextDate: string; // String!
+    overdue: boolean; // Boolean!
+    shouldClean: boolean; // Boolean!
+    times: number | null; // Int
   }
   Mutation: { // field return type
-    addBook: NexusGenRootTypes['Book'] | null; // Book
+    feedPlanter: NexusGenRootTypes['Planter'][]; // [Planter!]!
+  }
+  Planter: { // field return type
+    id: string; // ID!
+    lastFeedDate: string; // String!
+    model: NexusGenEnums['PlanterModels']; // PlanterModels!
+    name: string; // String!
+    nextFeeding: NexusGenRootTypes['Feeding']; // Feeding!
+    schedule: NexusGenRootTypes['Feeding'][]; // [Feeding!]!
+    size: NexusGenEnums['PlanterSizes']; // PlanterSizes!
+    startDate: string; // String!
   }
   Query: { // field return type
     app: NexusGenRootTypes['App']; // App!
-    books: NexusGenRootTypes['Book'][]; // [Book!]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
   App: { // field return type name
-    books: 'Book'
+    planters: 'Planter'
   }
-  Book: { // field return type name
-    author: 'String'
-    title: 'String'
-    year: 'Int'
+  Feeding: { // field return type name
+    feedAmount: 'Int'
+    id: 'ID'
+    interval: 'Int'
+    nextDate: 'String'
+    overdue: 'Boolean'
+    shouldClean: 'Boolean'
+    times: 'Int'
   }
   Mutation: { // field return type name
-    addBook: 'Book'
+    feedPlanter: 'Planter'
+  }
+  Planter: { // field return type name
+    id: 'ID'
+    lastFeedDate: 'String'
+    model: 'PlanterModels'
+    name: 'String'
+    nextFeeding: 'Feeding'
+    schedule: 'Feeding'
+    size: 'PlanterSizes'
+    startDate: 'String'
   }
   Query: { // field return type name
     app: 'App'
-    books: 'Book'
   }
 }
 
 export interface NexusGenArgTypes {
+  App: {
+    planters: { // args
+      planterId?: string | null; // String
+    }
+  }
   Mutation: {
-    addBook: { // args
-      input: NexusGenInputs['BookInput']; // BookInput!
+    feedPlanter: { // args
+      input?: NexusGenInputs['PlanterFeedInput'] | null; // PlanterFeedInput
     }
   }
 }
@@ -105,7 +164,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

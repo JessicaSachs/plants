@@ -1,20 +1,25 @@
-import { nxs } from 'nexus-decorators'
-import { Book, BookDetails } from './Book'
+import { nxs, NxsArgs } from 'nexus-decorators'
+import { Planter, PlanterDetails } from './Planter'
 import { Context } from './Context'
 
 export class App {
   constructor(private ctx: Context) {}
 
-  @nxs.field.nonNull.list.nonNull.type(() => Book, {
-    description: 'All the books in the system',
+  @nxs.field.nonNull.list.nonNull.type(() => Planter, {
+    description: 'All the planters in the garden',
+    args(t) {
+      t.string('planterId')
+    },
   })
-  get books() {
-    return this.ctx.books
+  planters(args: { planterId: NxsArgs<'Planter', 'id'> }) {
+    return args.planterId
+      ? this.ctx.planters.filter((p) => p.id === args.planterId)
+      : this.ctx.planters
   }
 
-  addBook(details: BookDetails) {
-    const book = new Book(details)
-    this.ctx.books.push(book)
-    return book
+  addPlanter(input: PlanterDetails) {
+    const planter = new Planter(input)
+    this.ctx.planters.push(planter)
+    return planter
   }
 }

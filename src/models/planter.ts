@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash'
-const ONE_DAY = 1000 * 60 * 60 * 25
+const ONE_DAY = 1000 * 60 * 60 * 24
 
 // with an array of dates, shift them all by current date
 export function shiftDates(byDate: number, dates: Feeding[]) {

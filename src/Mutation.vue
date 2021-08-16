@@ -15,18 +15,18 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { gql, useMutation } from '@urql/vue'
-import { AddBookDocument } from './generated/graphql'
+// import { gql, useMutation } from '@urql/vue'
+// import { AddBookDocument } from './generated/graphql'
 
-gql`
-  mutation AddBook($input: BookInput!) {
-    addBook(input: $input) {
-      title
-    }
-  }
-`
+// gql`
+//   mutation AddBook($input: BookInput!) {
+//     addBook(input: $input) {
+//       title
+//     }
+//   }
+// `
 
-const addBook = useMutation(AddBookDocument)
+// const addBook = useMutation(AddBookDocument)
 
 const title = ref('')
 const author = ref('')
@@ -34,13 +34,13 @@ const year = ref<number | null>(null)
 
 const add = async () => {
   // no need to update cache manually - it "just works"
-  await addBook.executeMutation({
-    input: {
-      title: title.value,
-      author: author.value,
-      year: year.value || 0,
-    }
-  })
+  // await addBook.executeMutation({
+  //   input: {
+  //     title: title.value,
+  //     author: author.value,
+  //     year: year.value || 0,
+  //   }
+  // })
   title.value = ''
   author.value = ''
   year.value = null

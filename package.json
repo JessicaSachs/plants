@@ -9,6 +9,7 @@
     "codegen": "graphql-codegen --config ${PWD}/graphql-codegen.yml"
   },
   "dependencies": {
+    "graphql-scalars": "1.10.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@urql/vue": "^0.4.3",
@@ -29,6 +30,7 @@
     "vue-demi": "^0.11.2",
     "vue-global-api": "^0.4.1",
     "vue-i18n": "^9.1.7",
+    "nanoid": "3.1.25",
     "vue-router": "^4.0.11"
   },
   "devDependencies": {

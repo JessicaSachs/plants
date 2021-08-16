@@ -30,10 +30,12 @@ specifiers:
   graphql: ^15.5.1
   graphql-code-generator: ^0.18.2
   graphql-nexus: ^0.1.1
+  graphql-scalars: 1.10.0
   https-localhost: ^4.6.5
   lodash: 4.17.21
   markdown-it-link-attributes: ^3.0.0
   markdown-it-prism: ^2.1.8
+  nanoid: 3.1.25
   nexus: ^1.1.0
   nexus-decorators: ^0.2.3
   nprogress: ^0.2.0
@@ -68,7 +70,9 @@ dependencies:
   graphql: 15.5.1
   graphql-code-generator: 0.18.2_graphql@15.5.1
   graphql-nexus: 0.1.1_graphql@15.5.1
+  graphql-scalars: 1.10.0_graphql@15.5.1
   lodash: 4.17.21
+  nanoid: 3.1.25
   nexus: 1.1.0_graphql@15.5.1
   nexus-decorators: 0.2.3
   nprogress: 0.2.0
@@ -5507,6 +5511,16 @@ packages:
       graphql: 15.5.1
     dev: true
 
+  /graphql-scalars/1.10.0_graphql@15.5.1:
+    resolution: {integrity: sha512-LONlj8FfhA2iGpkZJWf5e4PVAHXxnZEHSOEvowLYvNXl/TNnhIck8VmE+lren/aa6GKrG+lZufo5lgnyjxcF6g==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+    dependencies:
+      graphql: 15.5.1
+      tslib: 2.2.0
+    dev: false
+
   /graphql-tag-pluck/0.6.0:
     resolution: {integrity: sha512-C1SRw5zZtl7CN7mv6Q0abFVSJwG8M+FniFCPqWD+AjQMj9igNPthraMUQ02KSo+j19khR60mksqmFN3BwboFaw==}
     dependencies:
@@ -7139,6 +7153,12 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
+
+  /nanoid/3.1.25:
+    resolution: {integrity: sha512-rdwtIXaXCLFAQbnfqDRnI6jaRHp9fTcYBjtFKE8eezcZ7LuLjhUaQGNeMXf1HmRoCH32CLz6XwX0TtxEOS/A3Q==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: false
 
   /nanomatch/1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
@@ -9131,7 +9151,6 @@ packages:
 
   /tslib/2.2.0:
     resolution: {integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==}
-    dev: true
 
   /tslib/2.3.1:
     resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
