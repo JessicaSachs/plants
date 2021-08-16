@@ -43,7 +43,7 @@
   </tr>
 </template>
 
-<script lang="ts">import { GetPlantersQuery } from '~/generated/graphql'
+<script lang="ts">import { FeedingCardDetailsFragment } from '~/generated/graphql'
 
 export default {
   inheritAttrs: false
@@ -53,9 +53,10 @@ export default {
 import Badge from '~/components/Badge.vue'
 import { useI18n } from 'vue-i18n'
 
+
 const { d } = useI18n()
 defineProps<{
-  feeding: GetPlantersQuery['app']['planters'][0]['schedule'][0]
+  feeding: FeedingCardDetailsFragment
   disabled: boolean
 }>()
 </script>
