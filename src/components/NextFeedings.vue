@@ -55,7 +55,7 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <a
-                    @click="$emit('click', planter)"
+                    @click="$emit('feed', planter)"
                     class="text-indigo-600 hover:text-indigo-900 cursor-pointer select-none"
                   >Feed</a>
                 </td>
@@ -68,14 +68,25 @@
   </div>
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false
+}
+</script>
+
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { GetPlantersQuery } from '~/generated/graphql'
+import { defineEmits } from 'vue'
 
 const { d } = useI18n()
 
 defineProps<{
   planters: GetPlantersQuery['app']['planters']
+}>()
+
+defineEmits<{
+  feed: (planter: GetPlantersQuery['app']['planters'][0]) => void
 }>()
 
 </script>

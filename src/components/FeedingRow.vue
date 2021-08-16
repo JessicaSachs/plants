@@ -19,21 +19,14 @@
         'select-none': disabled
       }"
     >
-      <span
-        v-if="feeding.times"
-        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
-      >{{ feeding.times === 1 ? 'One-time' : '' }}</span>
-      <span
-        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-green-800 bg-green-100"
+      <Badge v-if="feeding.times" class="bg-yellow-100 text-yellow-800">One-time</Badge>
+      <Badge
         :class="{
+          'text-green-800 bg-green-100': !feeding.overdue,
           'bg-red-100 text-red-800': feeding.overdue
         }"
-      >{{ feeding.overdue ? 'Overdue' : 'Upcoming' }}</span>
-
-      <span
-        v-if="feeding.shouldClean"
-        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-blue-800 bg-blue-100"
-      >Clean</span>
+      >{{ feeding.overdue ? 'Overdue' : 'Upcoming' }}</Badge>
+      <Badge class="text-blue-800 bg-blue-100">Clean</Badge>
     </td>
     <td
       class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
@@ -57,7 +50,7 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-// import type { Feeding } from '../models/'
+import Badge from '~/components/Badge.vue'
 import { useI18n } from 'vue-i18n'
 
 const { d } = useI18n()

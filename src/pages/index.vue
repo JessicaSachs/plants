@@ -1,64 +1,83 @@
 <script setup lang="ts">
-// import { reactive, ref } from 'vue'
-// import { bountyOne, bountyThree, bountyTwo, kitchenHarvest } from '../models'
-// import PlanterCard from '../components/PlanterCard.vue'
-// import NextFeedings from '../components/NextFeedings.vue'
-
-import { gql, useQuery } from '@urql/vue'
-import { GetPlantersDocument } from '~/generated/graphql'
+import { gql, useQuery, useMutation } from '@urql/vue'
+import { GetPlantersDocument, PlanterFeedDocument } from '~/generated/graphql'
+import Button from '~/components/Button.vue'
 
 gql`
  query GetPlanters {
    app {
      planters {
-       id
-       name
-       size
-       lastFeedDate
+       ...PlanterDetails
        nextFeeding {
-         nextDate
-         feedAmount
-         interval
-         overdue
-         shouldClean
-         id
-         times
+         ...FeedingDetails
        }
        schedule {
-         nextDate
-         feedAmount
-         overdue
-         interval
-         shouldClean
-         id
-         times
+         ...FeedingDetails
        }
      }
    }
  }
 `
 
+gql`
+  fragment FeedingDetails on Feeding {
+    times
+    feedAmount
+    overdue
+    shouldClean
+    nextDate
+    interval
+    id
+  }
+`
+
+gql`
+fragment PlanterDetails on Planter {
+  startDate
+  id
+  name
+  size
+  lastFeedDate
+}
+`
+
 const { fetching, data, error } = useQuery({ query: GetPlantersDocument })
 
 const planters = computed(() => data.value?.app?.planters)
-// const planters = reactive([
-//   bountyOne,
-//   kitchenHarvest,
-//   bountyTwo,
-//   bountyThree
-// ])
 
-// const date = ref(Date.now())
+gql`
+mutation PlanterFeed($input: PlanterFeedInput) {
+  feedPlanter(input: $input) {
+    id
+    name
+    schedule {
+      id
+      nextDate
+      shouldClean
+    }
+  }
+}
+`
 
-// const feedThemAll = () => planters.forEach(p => p.feed())
+const mutation = useMutation(PlanterFeedDocument)
 
-const log = () => { }
+const feedThemAll = (id?: string) => {
+  const date = new Date().toString()
+
+  if (id) {
+    mutation.executeMutation({ input: { date, planterId: id } })
+    return
+  }
+
+  // @ts-ignore
+  mutation.executeMutation()
+}
+
 </script>
 
 <template>
   <div v-if="fetching">Fetching</div>
   <div v-else-if="error">{{ error }}</div>
-  <!-- <div v-else>{{ planters }}</div> -->
   <div class="text-center max-w-1200px mx-auto my-0" v-else>
     <div
       class="p-2 py-12 border-b-1 pb-6 mb-12 sm:p-2 sm:pb-8 shadow-xs text-left flex justify-between"
@@ -71,18 +90,20 @@ const log = () => { }
       <div class="w-full space-y-4 max-w-700px">
         <div class="flex justify-between">
           <h2 class="text-2xl text-gray-800">Upcoming feedings</h2>
-          <button
-            class="text-md text-white bg-indigo-600 rounded px-2 py-1"
-            @click="log"
-          >Feed them all</button>
+          <Button @click="feedThemAll()">Feed them all</Button>
         </div>
 
-        <NextFeedings @click="log" :planters="planters" />
+        <NextFeedings @feed="feedThemAll($event.id)" :planters="planters" />
       </div>
       <div class="w-full space-y-4">
         <h2 class="text-2xl text-gray-800 text-left">All Planters</h2>
         <ul class="flex flex-wrap gap-6 justify-evenly text-center">
-          <PlanterCard v-for="planter in planters" :planter="planter" :key="planter.name" />
+          <PlanterCard
+            @feed="feedThemAll($event.id)"
+            v-for="planter in planters"
+            :planter="planter"
+            :key="planter.name"
+          />
         </ul>
       </div>
     </div>

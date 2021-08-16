@@ -2,9 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --port 3333 --open",
+    "server": "ts-node ./src/graphql/server.ts",
     "build": "cross-env NODE_ENV=production vite-ssg build",
-    "preview": "vite preview",
-    "preview-https": "serve dist",
     "build-schema": "ts-node --transpile-only ./src/graphql/schema.ts",
     "codegen": "graphql-codegen --config ${PWD}/graphql-codegen.yml"
   },
