@@ -77,7 +77,7 @@ export default {
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
 import { PlantersFragment } from '~/generated/graphql'
-import { defineEmits } from 'vue'
+import { computed } from 'vue'
 import { gql } from '@urql/vue'
 
 const { d } = useI18n()
@@ -99,7 +99,7 @@ const props = defineProps<{
   gql: PlantersFragment
 }>()
 
-const planters = props.gql.planters
+const planters = computed(() => props.gql.planters)
 
 
 // stupid error when using defineEmits<{...}>
