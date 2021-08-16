@@ -26,10 +26,10 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="planter in planters" :key="planter.id">
+              <tr v-for="planter of planters" :key="planter?.id">
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm text-left font-medium text-gray-900"
-                >{{ planter.name }}</td>
+                >{{ planter?.name }}</td>
                 <td
                   class="px-6 py-4 rounded whitespace-nowrap text-left text-sm font-semibold text-left space-x-2"
                 >
@@ -76,17 +76,32 @@ export default {
 
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { GetPlantersQuery } from '~/generated/graphql'
-import { defineEmits } from 'vue'
+import { PlantersFragment } from '~/generated/graphql'
+import { computed } from 'vue'
+import { gql } from '@urql/vue'
 
 const { d } = useI18n()
 
-defineProps<{
-  planters: GetPlantersQuery['app']['planters']
+gql`
+fragment Planters on App {
+  planters {
+    id
+    name
+    nextFeeding {
+      ...FeedingCardDetails
+    }
+  }
+}
+`
+
+
+const props = defineProps<{
+  gql: PlantersFragment
 }>()
 
-defineEmits<{
-  feed: (planter: GetPlantersQuery['app']['planters'][0]) => void
-}>()
+const planters = computed(() => props.gql.planters)
 
+
+// stupid error when using defineEmits<{...}>
+defineEmits(['feed'])
 </script>

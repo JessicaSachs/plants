@@ -37,21 +37,37 @@ export type PlanterSizes =
   | 'six';
 
 
+export type PlantersFragment = { readonly __typename?: 'App', readonly planters: ReadonlyArray<{ readonly __typename?: 'Planter', readonly id: string, readonly name: string, readonly nextFeeding: (
+      { readonly __typename?: 'Feeding' }
+      & FeedingCardDetailsFragment
+    ) }> };
+
+export type FeedingCardDetailsFragment = { readonly __typename?: 'Feeding', readonly id: string, readonly shouldClean: boolean, readonly times: Maybe<number>, readonly feedAmount: number, readonly nextDate: string, readonly overdue: boolean, readonly interval: Maybe<number> };
+
+export type PlanterCardFragment = (
+  { readonly __typename?: 'Planter', readonly schedule: ReadonlyArray<(
+    { readonly __typename?: 'Feeding' }
+    & FeedingCardDetailsFragment
+  )>, readonly nextFeeding: (
+    { readonly __typename?: 'Feeding' }
+    & FeedingCardDetailsFragment
+  ) }
+  & PlanterDetailsFragment
+);
+
 export type GetPlantersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPlantersQuery = { readonly __typename?: 'Query', readonly app: { readonly __typename?: 'App', readonly planters: ReadonlyArray<(
       { readonly __typename?: 'Planter', readonly nextFeeding: (
         { readonly __typename?: 'Feeding' }
-        & FeedingDetailsFragment
+        & FeedingCardDetailsFragment
       ), readonly schedule: ReadonlyArray<(
         { readonly __typename?: 'Feeding' }
-        & FeedingDetailsFragment
+        & FeedingCardDetailsFragment
       )> }
       & PlanterDetailsFragment
     )> } };
-
-export type FeedingDetailsFragment = { readonly __typename?: 'Feeding', readonly times: Maybe<number>, readonly feedAmount: number, readonly overdue: boolean, readonly shouldClean: boolean, readonly nextDate: string, readonly interval: Maybe<number>, readonly id: string };
 
 export type PlanterDetailsFragment = { readonly __typename?: 'Planter', readonly startDate: string, readonly id: string, readonly name: string, readonly size: PlanterSizes, readonly lastFeedDate: string };
 
@@ -62,7 +78,9 @@ export type PlanterFeedMutationVariables = Exact<{
 
 export type PlanterFeedMutation = { readonly __typename?: 'Mutation', readonly feedPlanter: ReadonlyArray<{ readonly __typename?: 'Planter', readonly id: string, readonly name: string, readonly schedule: ReadonlyArray<{ readonly __typename?: 'Feeding', readonly id: string, readonly nextDate: string, readonly shouldClean: boolean }> }> };
 
-export const FeedingDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FeedingDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Feeding"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"times"}},{"kind":"Field","name":{"kind":"Name","value":"feedAmount"}},{"kind":"Field","name":{"kind":"Name","value":"overdue"}},{"kind":"Field","name":{"kind":"Name","value":"shouldClean"}},{"kind":"Field","name":{"kind":"Name","value":"nextDate"}},{"kind":"Field","name":{"kind":"Name","value":"interval"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]} as unknown as DocumentNode<FeedingDetailsFragment, unknown>;
+export const FeedingCardDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FeedingCardDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Feeding"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"shouldClean"}},{"kind":"Field","name":{"kind":"Name","value":"times"}},{"kind":"Field","name":{"kind":"Name","value":"feedAmount"}},{"kind":"Field","name":{"kind":"Name","value":"nextDate"}},{"kind":"Field","name":{"kind":"Name","value":"overdue"}},{"kind":"Field","name":{"kind":"Name","value":"interval"}}]}}]} as unknown as DocumentNode<FeedingCardDetailsFragment, unknown>;
+export const PlantersFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Planters"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"App"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nextFeeding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingCardDetails"}}]}}]}}]}},...FeedingCardDetailsFragmentDoc.definitions]} as unknown as DocumentNode<PlantersFragment, unknown>;
 export const PlanterDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PlanterDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Planter"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"size"}},{"kind":"Field","name":{"kind":"Name","value":"lastFeedDate"}}]}}]} as unknown as DocumentNode<PlanterDetailsFragment, unknown>;
-export const GetPlantersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlanters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlanterDetails"}},{"kind":"Field","name":{"kind":"Name","value":"nextFeeding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingDetails"}}]}},{"kind":"Field","name":{"kind":"Name","value":"schedule"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingDetails"}}]}}]}}]}}]}},...PlanterDetailsFragmentDoc.definitions,...FeedingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<GetPlantersQuery, GetPlantersQueryVariables>;
+export const PlanterCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PlanterCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Planter"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlanterDetails"}},{"kind":"Field","name":{"kind":"Name","value":"schedule"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingCardDetails"}}]}},{"kind":"Field","name":{"kind":"Name","value":"nextFeeding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingCardDetails"}}]}}]}},...PlanterDetailsFragmentDoc.definitions,...FeedingCardDetailsFragmentDoc.definitions]} as unknown as DocumentNode<PlanterCardFragment, unknown>;
+export const GetPlantersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPlanters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"app"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planters"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PlanterDetails"}},{"kind":"Field","name":{"kind":"Name","value":"nextFeeding"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingCardDetails"}}]}},{"kind":"Field","name":{"kind":"Name","value":"schedule"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FeedingCardDetails"}}]}}]}}]}}]}},...PlanterDetailsFragmentDoc.definitions,...FeedingCardDetailsFragmentDoc.definitions]} as unknown as DocumentNode<GetPlantersQuery, GetPlantersQueryVariables>;
 export const PlanterFeedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PlanterFeed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanterFeedInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"feedPlanter"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"schedule"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nextDate"}},{"kind":"Field","name":{"kind":"Name","value":"shouldClean"}}]}}]}}]}}]} as unknown as DocumentNode<PlanterFeedMutation, PlanterFeedMutationVariables>;

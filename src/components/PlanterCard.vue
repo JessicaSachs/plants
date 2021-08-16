@@ -64,16 +64,42 @@
 
 <script lang="ts" setup>
 import FeedingRow from './FeedingRow.vue'
-import { GetPlantersQuery } from '~/generated/graphql'
+import { PlanterCardFragment } from '~/generated/graphql'
 import { defineEmits } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '~/components/Button.vue'
+import { gql } from '@urql/core'
+
+gql`
+fragment FeedingCardDetails on Feeding {
+  id
+  shouldClean
+  times
+  feedAmount
+  nextDate
+  overdue
+  interval
+}
+
+fragment PlanterCard on Planter {
+  ...PlanterDetails
+
+  schedule {
+    ...FeedingCardDetails
+  }
+
+  nextFeeding {
+    ...FeedingCardDetails
+  }
+}
+`
+
 
 const { d } = useI18n()
 const emit = defineEmits(['feed'])
 
 const props = defineProps<{
-  planter: GetPlantersQuery['app']['planters'][0]
+  planter: PlanterCardFragment
 }>()
 
 const feed = () => { emit('feed', props.planter) }

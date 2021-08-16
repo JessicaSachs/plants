@@ -9,28 +9,15 @@ gql`
      planters {
        ...PlanterDetails
        nextFeeding {
-         ...FeedingDetails
+         ...FeedingCardDetails
        }
        schedule {
-         ...FeedingDetails
+         ...FeedingCardDetails
        }
      }
    }
  }
 `
-
-gql`
-  fragment FeedingDetails on Feeding {
-    times
-    feedAmount
-    overdue
-    shouldClean
-    nextDate
-    interval
-    id
-  }
-`
-
 gql`
 fragment PlanterDetails on Planter {
   startDate
@@ -44,6 +31,7 @@ fragment PlanterDetails on Planter {
 const { fetching, data, error } = useQuery({ query: GetPlantersDocument })
 
 const planters = computed(() => data.value?.app?.planters)
+const app = computed(() => data.value?.app)
 
 gql`
 mutation PlanterFeed($input: PlanterFeedInput) {
@@ -93,7 +81,8 @@ const feedThemAll = (id?: string) => {
           <Button @click="feedThemAll()">Feed them all</Button>
         </div>
 
-        <NextFeedings @feed="feedThemAll($event.id)" :planters="planters" />
+{{ app?.planters?.length }}
+        <NextFeedings v-if="app?.planters" @feed="feedThemAll($event.id)" :gql="app" />
       </div>
       <div class="w-full space-y-4">
         <h2 class="text-2xl text-gray-800 text-left">All Planters</h2>
